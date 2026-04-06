@@ -54,7 +54,7 @@ export default async function ContactPage({
 
           <ContactCard icon="💬" label={c.whatsapp_label} note={c.whatsapp_note}>
             <a
-              href="https://wa.me/50912345678"
+              href="https://wa.me/9546490794"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#25D366] font-semibold hover:underline"
@@ -65,10 +65,11 @@ export default async function ContactPage({
 
           <ContactCard icon="✉️" label={c.email_label} note={c.email_note}>
             <a
-              href="mailto:info@ayitikay.com"
+              // href="mailto:info@ayitikay.com"
+              href="ejbhonor@gmail.com"
               className="text-[#1D9E75] font-semibold hover:underline"
             >
-              info@ayitikay.com
+              ejbhonor@gmail.com
             </a>
           </ContactCard>
 

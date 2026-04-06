@@ -37,7 +37,7 @@ export function Footer() {
             <p className="text-sm text-slate-400 leading-relaxed">{t('tagline')}</p>
             {/* WhatsApp contact */}
             <a
-              href="https://wa.me/50912345678"
+              href="https://wa.me/9546490794"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm text-[#1D9E75] hover:text-[#25D366] transition-colors"
