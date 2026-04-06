@@ -59,14 +59,13 @@ export default async function ContactPage({
               rel="noopener noreferrer"
               className="text-[#25D366] font-semibold hover:underline"
             >
-              +509 12 34 5678
+              +1 (954) 649-0794
             </a>
           </ContactCard>
 
           <ContactCard icon="✉️" label={c.email_label} note={c.email_note}>
             <a
-              // href="mailto:info@ayitikay.com"
-              href="ejbhonor@gmail.com"
+              href="mailto:ejbhonor@gmail.com"
               className="text-[#1D9E75] font-semibold hover:underline"
             >
               ejbhonor@gmail.com

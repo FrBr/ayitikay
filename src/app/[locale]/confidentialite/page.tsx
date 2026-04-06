@@ -28,7 +28,7 @@ const CONTENT = {
       },
       {
         title: 'Contact',
-        body: 'Pour toute question concernant vos données personnelles : info@ayitikay.com',
+        body: 'Pour toute question concernant vos données personnelles : ejbhonor@gmail.com',
       },
     ],
   },
@@ -58,7 +58,7 @@ const CONTENT = {
       },
       {
         title: 'Contact',
-        body: 'For any questions about your personal data: info@ayitikay.com',
+        body: 'For any questions about your personal data: ejbhonor@gmail.com',
       },
     ],
   },
@@ -88,7 +88,7 @@ const CONTENT = {
       },
       {
         title: 'Kontakte',
-        body: 'Pou nenpòt kesyon sou done pèsonèl ou: info@ayitikay.com',
+        body: 'Pou nenpòt kesyon sou done pèsonèl ou: ejbhonor@gmail.com',
       },
     ],
   },
