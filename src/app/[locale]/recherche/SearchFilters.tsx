@@ -3,8 +3,8 @@
 import { useState, useTransition } from 'react';
 import { useRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
-import type { PropertyTypeOption } from '@/lib/listings/propertyTypes';
-import { getLabel } from '@/lib/listings/propertyTypes';
+import type { PropertyTypeOption } from '@/lib/listings/propertyTypeUtils';
+import { getLabel } from '@/lib/listings/propertyTypeUtils';
 
 const PRICE_OPTIONS = [
   { label: '$1,500', value: '1500' },

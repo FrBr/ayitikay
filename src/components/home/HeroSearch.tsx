@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
-import type { PropertyTypeOption } from '@/lib/listings/propertyTypes';
-import { getLabel } from '@/lib/listings/propertyTypes';
+import type { PropertyTypeOption } from '@/lib/listings/propertyTypeUtils';
+import { getLabel } from '@/lib/listings/propertyTypeUtils';
 
 const PRICE_RANGES = [
   { label: '< $3,000',          value: '0-3000' },

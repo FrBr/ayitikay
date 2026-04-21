@@ -3,8 +3,8 @@
 import { useTranslations } from 'next-intl';
 import { formatUsd, formatHtg, monthlyFromAnnual, htgFromUsd } from '@/lib/supabase/types';
 import type { ListingDraft } from '@/lib/listings/actions';
-import type { PropertyTypeOption } from '@/lib/listings/propertyTypes';
-import { getLabel } from '@/lib/listings/propertyTypes';
+import type { PropertyTypeOption } from '@/lib/listings/propertyTypeUtils';
+import { getLabel } from '@/lib/listings/propertyTypeUtils';
 
 
 

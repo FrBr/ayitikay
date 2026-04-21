@@ -1,11 +1,8 @@
+/** Server-only — uses next/headers via createClient */
 import { createClient } from '@/lib/supabase/server';
+import type { PropertyTypeOption } from './propertyTypeUtils';
 
-export interface PropertyTypeOption {
-  slug: string;
-  label_fr: string;
-  label_ht: string;
-  label_en: string;
-}
+export type { PropertyTypeOption } from './propertyTypeUtils';
 
 export async function getPropertyTypes(): Promise<PropertyTypeOption[]> {
   const supabase = await createClient();
@@ -15,11 +12,4 @@ export async function getPropertyTypes(): Promise<PropertyTypeOption[]> {
     .order('sort_order', { ascending: true });
 
   return (data ?? []) as PropertyTypeOption[];
-}
-
-/** Pick the right label for the current locale */
-export function getLabel(pt: PropertyTypeOption, locale: string): string {
-  if (locale === 'ht') return pt.label_ht;
-  if (locale === 'en') return pt.label_en;
-  return pt.label_fr;
 }

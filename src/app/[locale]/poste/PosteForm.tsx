@@ -7,7 +7,7 @@ import { StepPhotos }     from './steps/StepPhotos';
 import { StepAmenities }  from './steps/StepAmenities';
 import { StepPreview }    from './steps/StepPreview';
 import type { ListingDraft } from '@/lib/listings/actions';
-import type { PropertyTypeOption } from '@/lib/listings/propertyTypes';
+import type { PropertyTypeOption } from '@/lib/listings/propertyTypeUtils';
 
 type Step = 1 | 2 | 3 | 4;
 
