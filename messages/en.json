@@ -300,6 +300,7 @@
     "zone_label": "Commune / Neighborhood",
     "zone_placeholder": "e.g. Pétion-Ville",
     "type_label": "Property type",
+    "type_all": "All types",
     "price_label": "Annual price (USD)",
     "price_min_placeholder": "Min",
     "price_max_placeholder": "Max",

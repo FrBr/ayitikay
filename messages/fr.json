@@ -300,6 +300,7 @@
     "zone_label": "Commune / Quartier",
     "zone_placeholder": "ex: Pétion-Ville",
     "type_label": "Type de bien",
+    "type_all": "Tous les types",
     "price_label": "Prix annuel (USD)",
     "price_min_placeholder": "Min",
     "price_max_placeholder": "Max",

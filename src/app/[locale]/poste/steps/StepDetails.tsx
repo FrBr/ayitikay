@@ -3,27 +3,22 @@
 import { useTranslations } from 'next-intl';
 import { formatUsd, formatHtg, monthlyFromAnnual, htgFromUsd } from '@/lib/supabase/types';
 import type { ListingDraft } from '@/lib/listings/actions';
+import type { PropertyTypeOption } from '@/lib/listings/propertyTypes';
+import { getLabel } from '@/lib/listings/propertyTypes';
 
 
-const PROPERTY_TYPES = [
-  { value: 'apatman', labelKey: 'types.apatman' },
-  { value: 'kay',     labelKey: 'types.kay' },
-  { value: 'studio',  labelKey: 'types.studio' },
-  { value: 'chanm',   labelKey: 'types.chanm' },
-  { value: 'villa',   labelKey: 'types.villa' },
-  { value: 'duplex',  labelKey: 'types.duplex' },
-] as const;
 
 interface Props {
   draft: ListingDraft;
   onChange: (patch: Partial<ListingDraft>) => void;
   onNext: () => void;
   communes: string[];
+  propertyTypes: PropertyTypeOption[];
+  locale: string;
 }
 
-export function StepDetails({ draft, onChange, onNext, communes }: Props) {
-  const t  = useTranslations('post');
-  const th = useTranslations('hero');
+export function StepDetails({ draft, onChange, onNext, communes, propertyTypes, locale }: Props) {
+  const t = useTranslations('post');
 
   const price   = draft.annual_price_usd || 0;
   const monthly = monthlyFromAnnual(price);
@@ -94,8 +89,8 @@ export function StepDetails({ draft, onChange, onNext, communes }: Props) {
             className={inputCls}
           >
             <option value="">—</option>
-            {PROPERTY_TYPES.map(({ value, labelKey }) => (
-              <option key={value} value={value}>{th(labelKey)}</option>
+            {propertyTypes.map((pt) => (
+              <option key={pt.slug} value={pt.slug}>{getLabel(pt, locale)}</option>
             ))}
           </select>
         </Field>

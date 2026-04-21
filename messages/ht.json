@@ -300,6 +300,7 @@
     "zone_label": "Komin / Katye",
     "zone_placeholder": "egz: Pétion-Ville",
     "type_label": "Tip pwopriyete",
+    "type_all": "Tout tip",
     "price_label": "Pri anyèl (USD)",
     "price_min_placeholder": "Min",
     "price_max_placeholder": "Max",

@@ -7,6 +7,7 @@ import { ListingCard } from '@/components/listings/ListingCard';
 import { SearchFilters } from './SearchFilters';
 import { SortBar } from './SortBar';
 import type { FilterState } from './SearchFilters';
+import { getPropertyTypes } from '@/lib/listings/propertyTypes';
 
 interface RawSearchParams {
   zone?: string;
@@ -52,7 +53,7 @@ export default async function SearchPage({
   params: Promise<{ locale: string }>;
   searchParams: Promise<RawSearchParams>;
 }) {
-  await params;
+  const { locale } = await params;
   const sp = await searchParams;
   const t = await getTranslations('search');
 
@@ -60,7 +61,10 @@ export default async function SearchPage({
   const minPrice = sp.min ? parseInt(sp.min, 10) : prixRange.min;
   const maxPrice = sp.max ? parseInt(sp.max, 10) : prixRange.max;
 
-  const supabase = await createClient();
+  const [supabase, propertyTypes] = await Promise.all([
+    createClient(),
+    getPropertyTypes(),
+  ]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let query = (supabase as any)
@@ -133,7 +137,7 @@ export default async function SearchPage({
 
           <div className="md:flex gap-7 items-start">
             <aside className="md:w-72 md:shrink-0 md:sticky md:top-4 mb-4 md:mb-0">
-              <SearchFilters current={currentFilters} />
+              <SearchFilters current={currentFilters} propertyTypes={propertyTypes} locale={locale} />
             </aside>
 
             <div className="flex-1 min-w-0">

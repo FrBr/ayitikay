@@ -3,8 +3,8 @@
 import { useState, useTransition } from 'react';
 import { useRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
-
-const PROPERTY_TYPES = ['all', 'apatman', 'kay', 'studio', 'chanm', 'villa', 'duplex'] as const;
+import type { PropertyTypeOption } from '@/lib/listings/propertyTypes';
+import { getLabel } from '@/lib/listings/propertyTypes';
 
 const PRICE_OPTIONS = [
   { label: '$1,500', value: '1500' },
@@ -34,9 +34,16 @@ export interface FilterState {
   internet: string;
 }
 
-export function SearchFilters({ current }: { current: FilterState }) {
+export function SearchFilters({
+  current,
+  propertyTypes,
+  locale,
+}: {
+  current: FilterState;
+  propertyTypes: PropertyTypeOption[];
+  locale: string;
+}) {
   const t = useTranslations('search');
-  const tHero = useTranslations('hero');
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
@@ -154,8 +161,9 @@ export function SearchFilters({ current }: { current: FilterState }) {
             onChange={(e) => setF('type', e.target.value)}
             className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-[#1D9E75]"
           >
-            {PROPERTY_TYPES.map((pt) => (
-              <option key={pt} value={pt}>{tHero(`types.${pt}`)}</option>
+            <option value="all">{t('type_all')}</option>
+            {propertyTypes.map((pt) => (
+              <option key={pt.slug} value={pt.slug}>{getLabel(pt, locale)}</option>
             ))}
           </select>
         </FilterGroup>

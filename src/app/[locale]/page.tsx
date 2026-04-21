@@ -5,6 +5,7 @@ import { Footer } from '@/components/layout/Footer';
 import { HeroSearch } from '@/components/home/HeroSearch';
 import { FeaturedListings } from '@/components/home/FeaturedListings';
 import { getCommunes } from '@/lib/listings/communes';
+import { getPropertyTypes } from '@/lib/listings/propertyTypes';
 import { HowItWorks } from '@/components/home/HowItWorks';
 import { PostCTA } from '@/components/home/PostCTA';
 import type { Listing } from '@/lib/supabase/types';
@@ -219,7 +220,12 @@ export async function generateMetadata({
 //   },
 // ];
 
-export default async function HomePage() {
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   // TODO: replace with Supabase query:
   // const supabase = await createClient();
   // const { data } = await supabase
@@ -244,7 +250,7 @@ const { data: fetchedListings } = await supabase
   .order('created_at', { ascending: false })
   .limit(8);
 
-const [listings, communes] = await Promise.all([
+const [listings, communes, propertyTypes] = await Promise.all([
   Promise.resolve(
     (fetchedListings ?? []).map((l) => ({
       ...l,
@@ -255,13 +261,14 @@ const [listings, communes] = await Promise.all([
     }))
   ),
   getCommunes(),
+  getPropertyTypes(),
 ]);
 
   return (
     <>
       <Header />
       <main className="flex-1">
-        <HeroSearch communes={communes} />
+        <HeroSearch communes={communes} propertyTypes={propertyTypes} locale={locale} />
         <FeaturedListings listings={listings} />
         <HowItWorks />
         <PostCTA />

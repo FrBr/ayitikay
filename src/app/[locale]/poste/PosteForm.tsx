@@ -7,6 +7,7 @@ import { StepPhotos }     from './steps/StepPhotos';
 import { StepAmenities }  from './steps/StepAmenities';
 import { StepPreview }    from './steps/StepPreview';
 import type { ListingDraft } from '@/lib/listings/actions';
+import type { PropertyTypeOption } from '@/lib/listings/propertyTypes';
 
 type Step = 1 | 2 | 3 | 4;
 
@@ -24,7 +25,15 @@ const INITIAL: ListingDraft = {
   boost: false,
 };
 
-export function PosteForm({ communes }: { communes: string[] }) {
+export function PosteForm({
+  communes,
+  propertyTypes,
+  locale,
+}: {
+  communes: string[];
+  propertyTypes: PropertyTypeOption[];
+  locale: string;
+}) {
   const t = useTranslations('post');
   const [step, setStep] = useState<Step>(1);
   const [draft, setDraft] = useState<ListingDraft>(INITIAL);
@@ -74,7 +83,7 @@ export function PosteForm({ communes }: { communes: string[] }) {
       {/* Step content */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
         {step === 1 && (
-          <StepDetails  draft={draft} onChange={patch} onNext={() => setStep(2)} communes={communes} />
+          <StepDetails draft={draft} onChange={patch} onNext={() => setStep(2)} communes={communes} propertyTypes={propertyTypes} locale={locale} />
         )}
         {step === 2 && (
           <StepPhotos   draft={draft} onChange={patch} onNext={() => setStep(3)} onBack={() => setStep(1)} />

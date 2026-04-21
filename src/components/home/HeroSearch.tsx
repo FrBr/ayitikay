@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
-
-const PROPERTY_TYPES = ['all', 'apatman', 'kay', 'studio', 'chanm', 'villa', 'duplex'] as const;
+import type { PropertyTypeOption } from '@/lib/listings/propertyTypes';
+import { getLabel } from '@/lib/listings/propertyTypes';
 
 const PRICE_RANGES = [
   { label: '< $3,000',          value: '0-3000' },
@@ -14,7 +14,15 @@ const PRICE_RANGES = [
   { label: '> $24,000',         value: '24000-' },
 ];
 
-export function HeroSearch({ communes }: { communes: string[] }) {
+export function HeroSearch({
+  communes,
+  propertyTypes,
+  locale,
+}: {
+  communes: string[];
+  propertyTypes: PropertyTypeOption[];
+  locale: string;
+}) {
   const t = useTranslations('hero');
   const router = useRouter();
 
@@ -92,9 +100,10 @@ export function HeroSearch({ communes }: { communes: string[] }) {
               onChange={(e) => setType(e.target.value)}
               className="w-full px-3 py-3 rounded-xl border border-slate-200 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-[#1D9E75] focus:border-transparent appearance-none"
             >
-              {PROPERTY_TYPES.map((pt) => (
-                <option key={pt} value={pt}>
-                  {t(`types.${pt}`)}
+              <option value="all">{t('types.all')}</option>
+              {propertyTypes.map((pt) => (
+                <option key={pt.slug} value={pt.slug}>
+                  {getLabel(pt, locale)}
                 </option>
               ))}
             </select>

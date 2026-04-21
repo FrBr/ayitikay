@@ -6,19 +6,25 @@ import { Footer } from '@/components/layout/Footer';
 import { PosteForm } from './PosteForm';
 import { createClient } from '@/lib/supabase/server';
 import { getCommunes } from '@/lib/listings/communes';
+import { getPropertyTypes } from '@/lib/listings/propertyTypes';
 
 export const metadata: Metadata = { title: 'Poste yon lis' };
 
-export default async function PostePage() {
-  // Double-check auth server-side (proxy already guards this route,
-  // but being explicit prevents accidental exposure if routing changes)
+export default async function PostePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/connexion?redirect=/poste');
 
-  const [t, communes] = await Promise.all([
+  const [t, communes, propertyTypes] = await Promise.all([
     getTranslations('post'),
     getCommunes(),
+    getPropertyTypes(),
   ]);
 
   return (
@@ -29,7 +35,7 @@ export default async function PostePage() {
           <h1 className="text-2xl font-bold text-slate-900">{t('page_title')}</h1>
           <p className="text-slate-500 text-sm mt-1">{t('page_subtitle')}</p>
         </div>
-        <PosteForm communes={communes} />
+        <PosteForm communes={communes} propertyTypes={propertyTypes} locale={locale} />
       </main>
       <Footer />
     </>
