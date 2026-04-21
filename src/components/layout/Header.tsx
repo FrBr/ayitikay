@@ -154,7 +154,7 @@ export function Header({ user }: { user: User | null }) {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white">
+        <div className="md:hidden border-t border-slate-200 bg-white w-full max-w-[100vw] overflow-x-hidden">
           <nav className="px-4 py-3 space-y-1">
             {navLinks.map(({ href, label }) => (
               <Link
@@ -172,13 +172,16 @@ export function Header({ user }: { user: User | null }) {
                 <button
                   key={loc} type="button"
                   onClick={() => { switchLocale(loc); setMenuOpen(false); }}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+                  className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-colors text-center ${
                     locale === loc
                       ? 'bg-[#1D9E75] text-white'
                       : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                   }`}
                 >
                   {LOCALE_LABELS[loc]}
+                  <span className="ml-1 font-normal opacity-70">
+                    {loc === 'fr' ? 'Français' : loc === 'ht' ? 'Kreyòl' : 'English'}
+                  </span>
                 </button>
               ))}
             </div>

@@ -47,7 +47,10 @@ export async function proxy(request: NextRequest) {
 
   // 3. Redirect unauthenticated users away from protected pages
   if (isProtectedPath(request.nextUrl.pathname) && !user) {
-    const loginUrl = new URL('/connexion', request.url);
+    // Preserve locale prefix so /en/poste → /en/connexion, /ht/poste → /ht/connexion
+    const localeMatch = pathname.match(/^\/(ht|en)/);
+    const localePrefix = localeMatch ? localeMatch[0] : '';
+    const loginUrl = new URL(`${localePrefix}/connexion`, request.url);
     loginUrl.searchParams.set('redirect', request.nextUrl.pathname);
     return NextResponse.redirect(loginUrl);
   }
