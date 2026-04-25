@@ -77,7 +77,10 @@
     "subtitle": "Poste lis ou gratis epi rive dè milye lokatè potansyèl jodi a.",
     "button": "Poste gratis",
     "already_have": "Deja gen yon kont?",
-    "login_link": "Konekte"
+    "login_link": "Konekte",
+    "trust_free": "Gratis pou poste",
+    "trust_no_fee": "Pa gen komisyon",
+    "trust_whatsapp": "Kontakte dirèkteman via WhatsApp"
   },
   "footer": {
     "tagline": "Jwenn Kay ou nan Ayiti",

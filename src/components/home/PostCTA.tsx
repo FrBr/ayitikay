@@ -3,7 +3,6 @@ import { Link } from '@/i18n/navigation';
 
 export function PostCTA() {
   const t = useTranslations('cta');
-  const tNav = useTranslations('nav');
 
   return (
     <section className="py-16 bg-[#1D9E75] relative overflow-hidden">
@@ -44,18 +43,9 @@ export function PostCTA() {
 
         {/* Trust indicators */}
         <div className="mt-10 flex flex-wrap justify-center gap-6 text-white/70 text-sm">
-          <span className="flex items-center gap-1.5">
-            <CheckIcon />
-            Gratis pou poste
-          </span>
-          <span className="flex items-center gap-1.5">
-            <CheckIcon />
-            Pa gen komisyon
-          </span>
-          <span className="flex items-center gap-1.5">
-            <CheckIcon />
-            Kontakte dirèkteman via WhatsApp
-          </span>
+          <span className="flex items-center gap-1.5"><CheckIcon />{t('trust_free')}</span>
+          <span className="flex items-center gap-1.5"><CheckIcon />{t('trust_no_fee')}</span>
+          <span className="flex items-center gap-1.5"><CheckIcon />{t('trust_whatsapp')}</span>
         </div>
       </div>
     </section>

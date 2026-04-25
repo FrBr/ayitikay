@@ -77,7 +77,10 @@
     "subtitle": "Post your listing for free and reach thousands of potential tenants today.",
     "button": "Post for free",
     "already_have": "Already have an account?",
-    "login_link": "Log in"
+    "login_link": "Log in",
+    "trust_free": "Free to post",
+    "trust_no_fee": "No commission",
+    "trust_whatsapp": "Direct contact via WhatsApp"
   },
   "footer": {
     "tagline": "Find your home in Haiti",

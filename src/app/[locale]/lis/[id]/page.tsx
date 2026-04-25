@@ -66,7 +66,7 @@ export default async function ListingDetailPage({ params }: Props) {
   const annual  = listing.annual_price_usd;
   const monthly = monthlyFromAnnual(annual);
   const htg     = htgFromUsd(annual);
-  const depositMonths = listing.deposit_months ?? 12;
+  const depositMonths = listing.deposit_months ?? 0;
   const deposit = (annual / 12) * depositMonths; // stored as months in DB
   const total   = annual + deposit; // total due at signing
 
@@ -138,14 +138,16 @@ export default async function ListingDetailPage({ params }: Props) {
                 </div>
                 <p className="text-sm text-slate-500">{t('monthly_equiv', { amount: formatUsd(monthly) })}</p>
                 <p className="text-sm text-slate-400">{t('htg_equiv', { amount: formatHtg(htg) })}</p>
-                <div className="pt-3 border-t border-slate-100 space-y-1.5 text-sm">
-                  <div className="flex justify-between text-slate-600">
-                    <span>{t('deposit', { amount: formatUsd(deposit) })}</span>
+                {deposit > 0 && (
+                  <div className="pt-3 border-t border-slate-100 space-y-1.5 text-sm">
+                    <div className="flex justify-between text-slate-600">
+                      <span>{t('deposit', { amount: formatUsd(deposit) })}</span>
+                    </div>
+                    <div className="flex justify-between font-bold text-slate-900">
+                      <span>{t('total_due', { amount: formatUsd(total) })}</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between font-bold text-slate-900">
-                    <span>{t('total_due', { amount: formatUsd(total) })}</span>
-                  </div>
-                </div>
+                )}
               </div>
 
               {/* Stats strip */}

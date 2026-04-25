@@ -48,7 +48,7 @@ export async function createListing(draft: ListingDraft) {
   // Convert deposit_usd to deposit_months for DB storage (rounded, min 1)
   const depositMonths = draft.deposit_usd
     ? Math.max(1, Math.round((draft.deposit_usd / annual) * 12))
-    : 12;
+    : 0;
 
   const { data: listing, error } = await supabase
     .from('listings')

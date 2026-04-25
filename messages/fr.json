@@ -77,7 +77,10 @@
     "subtitle": "Publiez votre annonce gratuitement et atteignez des milliers de locataires potentiels dès aujourd'hui.",
     "button": "Publier gratuitement",
     "already_have": "Déjà un compte ?",
-    "login_link": "Connexion"
+    "login_link": "Connexion",
+    "trust_free": "Gratuit à publier",
+    "trust_no_fee": "Aucune commission",
+    "trust_whatsapp": "Contact direct via WhatsApp"
   },
   "footer": {
     "tagline": "Trouvez votre maison en Haïti",
