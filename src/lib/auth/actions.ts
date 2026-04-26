@@ -38,6 +38,24 @@ export async function signup(formData: FormData) {
   const accountType = formData.get('account_type') as AccountType;
   const agencyName = (formData.get('agency_name') as string) || null;
 
+  // Pre-check email existence via Auth REST API — more reliable than
+  // inspecting identities[], whose shape varies across Supabase versions.
+  const authCheckRes = await fetch(
+    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/admin/users?filter=${encodeURIComponent(email)}&per_page=1`,
+    {
+      headers: {
+        apikey: process.env.SUPABASE_SERVICE_ROLE_KEY!,
+        Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY!}`,
+      },
+    }
+  );
+  if (authCheckRes.ok) {
+    const authJson = await authCheckRes.json() as { users?: unknown[] };
+    if ((authJson.users?.length ?? 0) > 0) {
+      return { error: 'This email address is already registered. Please sign in or use a different email.' };
+    }
+  }
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -54,12 +72,6 @@ export async function signup(formData: FormData) {
 
   if (error) {
     return { error: error.message };
-  }
-
-  // Supabase silently "succeeds" for duplicate emails when email confirmation is
-  // enabled — it returns no error but identities is an empty array.
-  if (data.user?.identities?.length === 0) {
-    return { error: 'This email address is already registered. Please sign in or use a different email.' };
   }
 
   // Insert profile row immediately (trigger also does this, but belt-and-suspenders)
