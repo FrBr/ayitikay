@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import type { AccountType } from '@/lib/supabase/types';
 
 // ---------------------------------------------------------------------------
@@ -38,22 +39,16 @@ export async function signup(formData: FormData) {
   const accountType = formData.get('account_type') as AccountType;
   const agencyName = (formData.get('agency_name') as string) || null;
 
-  // Pre-check email existence via Auth REST API — more reliable than
-  // inspecting identities[], whose shape varies across Supabase versions.
-  const authCheckRes = await fetch(
-    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/admin/users?filter=${encodeURIComponent(email)}&per_page=1`,
-    {
-      headers: {
-        apikey: process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY!}`,
-      },
-    }
-  );
-  if (authCheckRes.ok) {
-    const authJson = await authCheckRes.json() as { users?: unknown[] };
-    if ((authJson.users?.length ?? 0) > 0) {
-      return { error: 'This email address is already registered. Please sign in or use a different email.' };
-    }
+  // Pre-check email existence using a SECURITY DEFINER function that can
+  // query auth.users (PostgREST only exposes the public schema, not auth).
+  // Run this once in Supabase SQL Editor:
+  //   CREATE OR REPLACE FUNCTION public.email_exists(p_email text)
+  //   RETURNS boolean LANGUAGE sql SECURITY DEFINER SET search_path = public AS
+  //   $$ SELECT EXISTS (SELECT 1 FROM auth.users WHERE email = p_email); $$;
+  const admin = createAdminClient();
+  const { data: exists } = await admin.rpc('email_exists', { p_email: email });
+  if (exists === true) {
+    return { error: 'This email address is already registered. Please sign in or use a different email.' };
   }
 
   const { data, error } = await supabase.auth.signUp({
