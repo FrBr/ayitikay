@@ -74,6 +74,12 @@ export async function signup(formData: FormData) {
     return { error: error.message };
   }
 
+  // Fallback duplicate check — Supabase returns a fake user with empty identities
+  // when email confirmation is enabled and the address already exists.
+  if (!data.user || data.user.identities?.length === 0) {
+    return { error: 'This email address is already registered. Please sign in or use a different email.' };
+  }
+
   // Insert profile row immediately (trigger also does this, but belt-and-suspenders)
   if (data.user) {
     await supabase.from('profiles').upsert({
